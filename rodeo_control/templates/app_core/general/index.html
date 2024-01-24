@@ -1,0 +1,41 @@
+{% extends "app_core/base.html" %}
+
+{% load static %}
+
+{% block head_title %}{{ block.super }} Inicio{% endblock head_title %}
+
+{% block content %}
+
+    <header>
+        <!-- start logo -->
+            {% include 'app_core/general/snippets/index/logo.html' %}
+        <!-- end logo -->
+
+        <!-- start menu -->
+            {% include 'app_core/general/snippets/menu.html' %}
+        <!-- end menu -->
+    </header>
+
+    <!-- start banner -->
+    {% include 'app_core/general/snippets/index/banner.html' %}
+    <!-- end banner -->
+
+    <!-- start about -->
+        {% include 'app_core/general/snippets/index/about.html' %}
+    <!-- end about -->
+
+    <!-- start portafolio -->
+        {% include 'app_core/general/snippets/index/portafolio.html' %}
+    <!-- end portafolio -->
+
+    <!-- start footer -->
+        {% include 'app_core/general/snippets/footer.html' %}
+    <!-- end footer -->
+
+    <!-- start Modal Agregar Rodeo -->
+        {% include 'app_core/general/snippets/index/modal_agregar_rodeo.html' %}
+    <!-- end Modal Agregar Rodeo -->
+
+{% endblock content %}
+
+{% block extra_javascript %}{% endblock extra_javascript %}

@@ -1,0 +1,41 @@
+<!-- Modal -->
+<div class="modal fade" id="eliminarRodeoModal{{forloop.counter}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Eliminar Rodeo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formAgregarRodeo" method="POST" action="">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-lg-12">
+                           <p>Estás a punto de eliminar el siguiente elemento: <b>{{rodeo.nombre}}</b>. Ten en cuenta que esta acción no puede deshacerse y eliminará todos los elementos asociados.</p>
+                           <p>Ingresa la palabra "BORRAR" a continuación para proceder con la eliminación del elemento.</p>
+                           <input type="hidden" name="add_or_edit_or_delete" value="4">
+                        </div>
+                        <div class="offset-lg-3 col-lg-6">
+                            <div class="form-group">
+                                <input class="form-control" 
+                                type="text"  
+                                id="eliminar_rodeo_texto"
+                                autocomplete="off"
+                                required>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" 
+                                id="eliminar_rodeo_btn" 
+                                class="btn btn-large btn-danger padding_button w-100" 
+                                disabled>ELIMINAR
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

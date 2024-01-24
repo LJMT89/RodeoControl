@@ -1,0 +1,27 @@
+{% load static %}
+
+<nav id="my-nav" class="navbar navbar-expand-lg navbar-light rounded-bar fixed-navbar">
+    <div class="row w-100 m-0">
+        <div class="col-3 p-0 mt-3 mt-md-4">
+            <ul class="navbar-icons">
+                <li class="navbar_list"><i class="lab la-facebook-f"></i></li>
+                <li class="navbar_list"><i class="lab la-twitter"></i></li>
+                <li class="navbar_list"><i class="lab la-linkedin-in"></i></li>
+            </ul>
+        </div>
+
+        <div class="col-6">
+            <div class="logo ml-auto mr-auto width-logo text-center mt-2 mt-md-3">
+                <a href="{% url 'app_core:index' %}"><img src="{% static 'app_core/blog/img/logo.png' %}" alt="Logo Img"></a>
+            </div>
+        </div>
+
+        <div class="col-3 p-0 text-right">
+            <div class="menu-btn mt-3 mt-md-4">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+</nav>

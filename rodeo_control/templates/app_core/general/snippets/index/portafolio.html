@@ -1,0 +1,50 @@
+{% load static %}
+
+<section id="portfolio" class="portfolio" style="padding-top: 45px;">
+    <div class="container">
+
+        <div style="padding-bottom: 30px; display: flex; justify-content: center; align-items: center;">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregarRodeoModal">
+                AGREGAR RODEO
+            </button>
+        </div>
+
+        <div id="js-grid-masonry-projects" class="cbp cbp-l-grid-masonry-projects">
+
+            {% for rodeo in rodeos %}
+                <div class="cbp-item">
+                    <div class="cbp-caption">
+                        
+                        <!--  DESCOMENTAR LA SIGUIENTE SECCION PARA PONERLE FOTOSO A LOS RODEOS EN EL INDEX  -->
+
+                        <div class="cbp-caption-defaultWrap">
+                            <img src="{% static 'app_core/blog/img/portfolioS9.jpg' %}" alt="">
+
+                        </div>
+                        <div class="cbp-caption-activeWrap">
+                            <div class="cbp-l-caption-alignCenter">
+                                <div class="cbp-l-caption-body">
+                                    <a href="{% url 'app_core:rodeo' rodeo.id %}" class="btn blog-btn cbp-l-caption-buttonLeft">READ MORE</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--  DESCOMENTAR LA SECCION ANTERIOR PARA PONERLE FOTOSO A LOS RODEOS EN EL INDEX  -->
+
+                    </div>
+                    <div class="portfolio-text">
+                        <p class="portfolio-vert text-grey" style="font-size: 8px;">La Travesada</p>
+                        <a class="text-black" href="{% url 'app_core:rodeo' rodeo.id %}"><h2 class="heading ml-3">{{rodeo.nombre}}</h2></a>
+                        <p class="date text-grey">{{rodeo.date_created}}</p>
+
+                        <div class="horizontal-line"></div>
+                        <p class="sub-heading text-grey mt-3">{{rodeo.descripcion}}
+
+
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</section>

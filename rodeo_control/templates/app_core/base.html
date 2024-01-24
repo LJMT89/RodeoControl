@@ -1,0 +1,76 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Themes Industry">
+    <!-- description -->
+    <meta name="description" content="MegaOne is a highly creative, modern, visually stunning and Bootstrap responsive multipurpose agency and HTML5 template with 14 ready home page demos.">
+    <!-- keywords -->
+    <meta name="keywords" content="creative, modern, clean, bootstrap responsive, html5, css3, portfolio, blog, agency, templates, multipurpose, one page, corporate, start-up, studio, branding, designer, freelancer, carousel, parallax, photography, personal, masonry, grid, faq">
+    <!-- Page Title -->
+    <title>{% block head_title %}RodeoControl | {% endblock head_title %}</title>
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'app_core/blog/img/favicon.ico' %}">
+    <!-- Bundle -->
+    <link rel="stylesheet" href="{% static 'app_core/vendor/css/bundle.min.css' %}">
+    <!-- Plugin Css -->
+    <link rel="stylesheet" href="{% static 'app_core/vendor/css/cubeportfolio.min.css' %}">
+    <link rel="stylesheet" href="{% static 'app_core/blog/css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'app_core/blog/css/jquery.fancybox.css' %}">
+    <link rel="stylesheet" href="{% static 'app_core/blog/css/jquery.fancybox.min.css' %}">
+    <link rel="stylesheet" href="{% static 'app_core/blog/css/line-awesome.min.css' %}">
+    <!-- Style Sheet -->
+    <link rel="stylesheet" href="{% static 'app_core/vendor/css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'app_core/blog/css/style.css' %}">
+
+    <style>
+        .mi-h1 {
+            font-family: 'Montserrat' , sans-serif;
+            font-size: 90px;
+            letter-spacing: 4px;
+            font-weight: bold;
+        }
+
+        @media only screen and (max-width: 768px) {
+            .mi-h1 {
+                font-family: 'Montserrat' , sans-serif;
+                font-size: 50px;
+                letter-spacing: 0px;
+                font-weight: bold;
+            }
+        }
+    </style>
+
+    {% block extra_styles %} {% endblock extra_styles %}
+</head>
+
+
+<body data-spy="scroll" data-target=".navbar" data-offset="150">
+
+<!-- start preloader -->
+    {% include 'app_core/general/snippets/base/preloader.html' %}
+<!-- end preloader -->
+
+{% block content %} {% endblock content %}
+
+<!-- JavaScript -->
+<script src="{% static 'app_core/vendor/js/bundle.min.js' %}"></script>
+
+<!-- Plugin Js -->
+<script src="{% static 'app_core/vendor/js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'app_core/vendor/js/jquery.cubeportfolio.min.js' %}"></script>
+<!-- custom script -->
+<script src="{% static 'app_core/blog/js/jquery.fancybox.js' %}"></script>
+<script src="{% static 'app_core/blog/js/jquery.fancybox.min.js' %}"></script>
+<script src="{% static 'app_core/blog/js/mediaelement-and-player.min.js' %}"></script>
+<script src="{% static 'app_core/blog/js/wow.min.js' %}"></script>
+<script src="{% static 'app_core/vendor/js/parallaxie.min.js' %}"></script>
+<script src="{% static 'app_core/blog/js/script.js' %}"></script>
+
+{% block extra_javascript %} {% endblock extra_javascript %}
+</body>
+</html>

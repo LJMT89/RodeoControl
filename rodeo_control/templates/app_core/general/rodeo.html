@@ -1,0 +1,127 @@
+{% extends "app_core/base.html" %}
+
+{% load static %}
+
+{% block head_title %}{{ block.super }} Inicio{% endblock head_title %}
+
+{% block extra_styles %}
+<link rel="stylesheet" href="{% static 'app_core/vendor/css/jquery.fancybox.min.css' %}">
+<link rel="stylesheet" href="{% static 'app_core/vendor/css/owl.carousel.min.css' %}">
+<link rel="stylesheet" href="{% static 'app_core/vendor/css/cubeportfolio.min.css' %}">
+<link rel="stylesheet" href="{% static 'app_core/blog/css/animate.min.css' %}">
+<link rel="stylesheet" href="{% static 'app_core/blog/css/line-awesome.min.css' %}">
+<link rel="stylesheet" href="{% static 'app_core/blog/css/mediaelementplayer.css' %}">
+<link rel="stylesheet" href="{% static 'app_core/blog/css/mejs-controls.svg' %}">
+<!-- DataTables -->
+<link href="{% static 'app_core/vendor/DataTables/datatables.min.css' %}" rel="stylesheet">
+<style>
+    .boton-borrar {
+        background-color: #fff; /* Fondo blanco o transparente */
+        border: none; /* Sin borde */
+        cursor: pointer;
+    }
+    .boton-editar {
+        background-color: #fff; /* Fondo blanco o transparente */
+        border: none; /* Sin borde */
+        cursor: pointer;
+    }
+    .marco-div {
+        width: 200px; /* Ancho del div */
+        height: 100px; /* Altura del div */
+        border: 2px solid #000; /* Establece un borde sólido de 2px en color negro */
+        padding: 10px; /* Añade espacio interno al contenido del div */
+        margin: 20px; /* Añade espacio externo alrededor del div */
+    }
+</style>
+{% endblock extra_styles %}
+
+{% block content %}
+
+<!-- START NAVBAR SECTION -->
+<header>
+    <!-- start navbar -->
+        {% include 'app_core/general/snippets/rodeo/navbar.html' %}
+    <!-- end navbar -->
+
+    <!-- start menu -->
+        {% include 'app_core/general/snippets/menu.html' %}
+    <!-- end menu -->
+</header>
+
+<div id="page_content">
+
+    <!--HEADER IMAGE-->
+    <section id="bg-blog-detail-img" class="bg-blog-detail-img">
+        <div class="overlay"></div>
+    </section>
+
+    <!-- start Tabla Animales -->
+        {% include 'app_core/general/snippets/rodeo/section_tabla_animales.html' %}
+    <!-- end Tabla Animales -->
+
+    <!-- start footer -->
+        {% include 'app_core/general/snippets/footer.html' %}
+    <!-- end footer -->
+
+    <!-- start Modal Agregar Animal -->
+        {% include 'app_core/general/snippets/rodeo/modal_agregar_animal.html' %}
+    <!-- end Modal Agregar Animal -->
+
+    <!-- start Modal Editar Rodeo -->
+    {% include 'app_core/general/snippets/rodeo/modal_editar_rodeo.html' %}
+    <!-- end Modal Editar Rodeo -->
+
+    <!-- start Modal Eliminar Rodeo -->
+        {% include 'app_core/general/snippets/rodeo/modal_eliminar_rodeo.html' %}
+    <!-- end Modal Eliminar Rodeo -->
+
+</div>
+
+{% endblock content %}
+
+{% block extra_javascript %}
+<script src="{% static 'app_core/vendor/js/jquery.fancybox.min.js' %}"></script>
+<!-- REVOLUTION JS FILES -->
+<script src="{% static 'app_core/vendor/js/jquery.themepunch.tools.min.js' %}"></script>
+<script src="{% static 'app_core/vendor/js/jquery.themepunch.revolution.min.js' %}"></script>
+<!-- DataTables -->
+<script src="{% static 'app_core/vendor/DataTables/datatables.min.js' %}"></script>
+<script>
+    // Librería DateTable para la tabla q muestra los animales
+    $('#myTable').DataTable( {
+        dom: "lBfrtip",
+        buttons: [
+            'copy', 'excel', 'pdf'
+        ]
+    } );
+
+    // Evento para el select de editar o eliminar un rodeo y desplegar el respectivo modal
+    $('#miSelect').change(function() {
+        // Esta función se ejecutará cada vez que se seleccione una opción
+        var opcionSeleccionada = $(this).val();
+        var select = document.getElementById('miSelect');
+        select.selectedIndex = 0;
+        if (opcionSeleccionada == '3') {
+            $('#editarRodeoModal').modal('show');
+            // console.log('Opción seleccionada:', opcionSeleccionada);
+        } else if (opcionSeleccionada == '4'){
+            $('#eliminarRodeoModal').modal('show');
+            // console.log('Opción seleccionada:', opcionSeleccionada);
+        }
+        
+    });
+
+    // Evento para eliminar un rodeo, se debe escribir la palabra BORRAR para activar el boton de eliminar
+    function eliminarRodeoKeyUp() {
+        var valorInput = document.getElementById('eliminar_rodeo_texto').value;
+        var boton = document.getElementById('eliminar_rodeo_btn');
+
+        if (valorInput === 'BORRAR') {
+            boton.disabled = false;
+        } else {
+            boton.disabled = true;
+        }
+    }
+    document.getElementById('eliminar_rodeo_texto').addEventListener('keyup', eliminarRodeoKeyUp);
+</script>
+{% endblock extra_javascript %}
