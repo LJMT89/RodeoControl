@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.http import JsonResponse
 from django.urls import reverse
 from datetime import datetime
 from app_core.models import Finca, Rodeo, Animal
@@ -59,3 +60,10 @@ def rodeo(request, pk):
     return redirect(reverse('app_core:rodeo', args=[rodeo.id]), context)
   
   return render(request, 'app_core/general/rodeo.html', context)
+
+def rodeo_animales(request, pk):
+  animales = Animal.objects.filter(rodeo=pk).values('numero', 'fecha', 'observacion')
+  data = list(animales)
+  print(f'Por lo menos llegamos aqui: {data}')
+
+  return JsonResponse(data, safe=False)

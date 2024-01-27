@@ -75,6 +75,8 @@
         {% include 'app_core/general/snippets/rodeo/modal_eliminar_rodeo.html' %}
     <!-- end Modal Eliminar Rodeo -->
 
+    {% include 'app_core/general/snippets/rodeo/modal_editar_animal.html' %}
+
 </div>
 
 {% endblock content %}
@@ -88,6 +90,12 @@
 <script src="{% static 'app_core/vendor/DataTables/datatables.min.js' %}"></script>
 <script>
     // Librería DateTable para la tabla q muestra los animales
+    var data = [
+        { "id": 1, "name": "John", "age": 30 },
+        { "id": 2, "name": "Jane", "age": 25 },
+        { "id": 3, "name": "Bob", "age": 40 }
+    ];
+
     $('#myTable').DataTable( {
         dom: "lBfrtip",
         buttons: [
@@ -95,6 +103,51 @@
         ],
         "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
         "pageLength": 100,
+        language: {
+            "sProcessing":    "Procesando...",
+            "sLengthMenu":    "Mostrar _MENU_ registros",
+            "sZeroRecords":   "No se encontraron resultados",
+            "sEmptyTable":    "Ningún dato disponible en esta tabla",
+            "sInfo":          "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            "sInfoEmpty":     "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "sInfoFiltered":  "(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix":   "",
+            "sSearch":        "Buscar:",
+            "sUrl":           "",
+            "sInfoThousands":  ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst":    "Primero",
+                "sLast":     "Último",
+                "sNext":     "Siguiente",
+                "sPrevious": "Anterior"
+            },
+            "oAria": {
+                "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            },
+            "oPaginate": {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            },
+            "sInfoThousands": ",",
+            "sInfoEmpty": "Mostrando 0 a 0 de 0 registros",
+            "sZeroRecords": "No se encontraron resultados",
+            "sLengthMenu": "Mostrar _MENU_ registros",
+            "sSearch": "Buscar:",
+            "oPaginate": {
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            }
+        },
+        data: data,
+        columns: [
+            { data: 'id' },
+            { data: 'name' },
+            { data: 'age' }
+        ]
     } );
 
     // Evento para el select de editar o eliminar un rodeo y desplegar el respectivo modal
@@ -126,4 +179,72 @@
     }
     document.getElementById('eliminar_rodeo_texto').addEventListener('keyup', eliminarRodeoKeyUp);
 </script>
+
+<script>
+    //Configuración de DataTable
+    function pintarDatatable(dataResult, columns) {
+        $("#animalesTabla").DataTable({
+            data: dataResult,
+            columnDefs: columns,
+            aaSorting: [],
+            pageLength: 25
+        })
+    }
+
+
+    async function datos() {
+        const data = await fetch("{% url 'app_core:rodeo_animales' rodeo.id %}")
+            .then(value => value.json())
+            .then(value => value)
+
+        //ESTRUCTURA JSON QUE DEVUELVE EL API.
+        /*
+        [
+            {
+            "albumId": 1,
+            "id": 1,
+            "title": "accusamus beatae ad facilis cum similique qui sunt",
+            "url": "https://via.placeholder.com/600/92c952",
+            "thumbnailUrl": "https://via.placeholder.com/150/92c952"
+            },
+        */
+
+        //targets: position
+        //Aquí data:"key". Ver arriba
+        //En "render: callback " puedes tranformar la data.
+        const columns = [{
+                targets: 0,
+                title: "Numero",
+                data: "numero"
+            },
+            {
+                targets: 1,
+                title: "Fecha",
+                data: "fecha",
+            },
+            {
+                targets: 2,
+                title: "Observación",
+                data: "observacion"
+            },
+            {
+                targets: 3,
+                title: "Acción",
+                data: null,
+                render : (data,type,r,m) => {
+                    return (type == "display") 
+                    ? `
+                        <button type="button" class="boton-editar" data-toggle="modal" data-target="#editarAnimalModal"><i class="fas fa-edit"></i></button> 
+                        <button type="button" class="boton-borrar"><i class="fas fa-trash-alt"></i></button>
+                    `  
+                    : null
+                }
+            }
+        ]
+        pintarDatatable(data, columns)
+    }
+
+    datos()
+</script>
+
 {% endblock extra_javascript %}
