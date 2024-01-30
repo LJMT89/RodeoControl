@@ -24,49 +24,7 @@
             </button>
         </div>
         <div class="col-lg-12 pt-5">
-            <table id="myTable">
-                <thead>
-                    <tr>
-                        <th style="width: 25%;">Número</th>
-                        <th style="width: 24%;">Fecha</th>
-                        <th style="width: 50%;">Observación</th>
-                        <th style="width: 1%;">Acción</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for animal in animales %}
-                        <tr>
-                            <td>{{animal.numero}}</td>
-                            <td>{{ animal.fecha|date:"Y" }}</td>
-                            <td>{{animal.observacion}}</td>
-                            <td>
-                                <button type="button" class="boton-editar" data-toggle="modal" data-target="#editarAnimalModal{{forloop.counter}}">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button type="button" class="boton-borrar" data-toggle="modal" data-target="#eliminarAnimalModal{{forloop.counter}}">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                            </td>
-                        </tr>    
-                        <!-- start Modal Editar Animal -->
-                            {% include 'app_core/general/snippets/rodeo/modal_editar_animal.html' %}
-                        <!-- end Modal Editar Animal -->
-                        
-                        <!-- start Modal Eliminar Animal -->
-                            {% include 'app_core/general/snippets/rodeo/modal_eliminar_animal.html' %}
-                        <!-- end Modal Eliminar Animal -->
-                    {% endfor %}
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <th>Número</th>
-                        <th>Fecha</th>
-                        <th>Observación</th>
-                        <th>Acción</th>
-                    </tr>
-                </tfoot>
-            </table>
-            
+            <table id="animalesTabla"></table>
         </div>
     </div>
 </section>

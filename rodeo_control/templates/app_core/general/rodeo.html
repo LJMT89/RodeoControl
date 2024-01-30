@@ -63,19 +63,25 @@
         {% include 'app_core/general/snippets/footer.html' %}
     <!-- end footer -->
 
-    <!-- start Modal Agregar Animal -->
-        {% include 'app_core/general/snippets/rodeo/modal_agregar_animal.html' %}
-    <!-- end Modal Agregar Animal -->
-
     <!-- start Modal Editar Rodeo -->
-    {% include 'app_core/general/snippets/rodeo/modal_editar_rodeo.html' %}
+        {% include 'app_core/general/snippets/rodeo/modal_editar_rodeo.html' %}
     <!-- end Modal Editar Rodeo -->
 
     <!-- start Modal Eliminar Rodeo -->
         {% include 'app_core/general/snippets/rodeo/modal_eliminar_rodeo.html' %}
     <!-- end Modal Eliminar Rodeo -->
 
-    {% include 'app_core/general/snippets/rodeo/modal_editar_animal.html' %}
+    <!-- start Modal Agregar Animal -->
+        {% include 'app_core/general/snippets/rodeo/modal_agregar_animal.html' %}
+    <!-- end Modal Agregar Animal -->
+
+    <!-- start Modal Editar Animal -->
+        {% include 'app_core/general/snippets/rodeo/modal_editar_animal.html' %}
+    <!-- end Modal Editar Animal -->
+    
+    <!-- start Modal Eliminar Animal -->
+        {% include 'app_core/general/snippets/rodeo/modal_eliminar_animal.html' %}
+    <!-- end Modal Eliminar Animal -->
 
 </div>
 
@@ -88,163 +94,199 @@
 <script src="{% static 'app_core/vendor/js/jquery.themepunch.revolution.min.js' %}"></script>
 <!-- DataTables -->
 <script src="{% static 'app_core/vendor/DataTables/datatables.min.js' %}"></script>
-<script>
-    // Librería DateTable para la tabla q muestra los animales
-    var data = [
-        { "id": 1, "name": "John", "age": 30 },
-        { "id": 2, "name": "Jane", "age": 25 },
-        { "id": 3, "name": "Bob", "age": 40 }
-    ];
 
-    $('#myTable').DataTable( {
-        dom: "lBfrtip",
-        buttons: [
-            'copy', 'excel', 'pdf'
-        ],
-        "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
-        "pageLength": 100,
-        language: {
-            "sProcessing":    "Procesando...",
-            "sLengthMenu":    "Mostrar _MENU_ registros",
-            "sZeroRecords":   "No se encontraron resultados",
-            "sEmptyTable":    "Ningún dato disponible en esta tabla",
-            "sInfo":          "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-            "sInfoEmpty":     "Mostrando registros del 0 al 0 de un total de 0 registros",
-            "sInfoFiltered":  "(filtrado de un total de _MAX_ registros)",
-            "sInfoPostFix":   "",
-            "sSearch":        "Buscar:",
-            "sUrl":           "",
-            "sInfoThousands":  ",",
-            "sLoadingRecords": "Cargando...",
-            "oPaginate": {
-                "sFirst":    "Primero",
-                "sLast":     "Último",
-                "sNext":     "Siguiente",
-                "sPrevious": "Anterior"
-            },
-            "oAria": {
-                "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-            },
-            "oPaginate": {
-                "sFirst": "Primero",
-                "sLast": "Último",
-                "sNext": "Siguiente",
-                "sPrevious": "Anterior"
-            },
-            "sInfoThousands": ",",
-            "sInfoEmpty": "Mostrando 0 a 0 de 0 registros",
-            "sZeroRecords": "No se encontraron resultados",
-            "sLengthMenu": "Mostrar _MENU_ registros",
-            "sSearch": "Buscar:",
-            "oPaginate": {
-                "sNext": "Siguiente",
-                "sPrevious": "Anterior"
+<script>
+    $(document).ready(function() {
+        // Evento para el select de editar o eliminar un rodeo y desplegar el respectivo modal
+        $('#miSelect').change(function() {
+            // Esta función se ejecutará cada vez que se seleccione una opción
+            var opcionSeleccionada = $(this).val();
+            var select = document.getElementById('miSelect');
+            select.selectedIndex = 0;
+            if (opcionSeleccionada == '3') {
+                $('#editarRodeoModal').modal('show');
+                // console.log('Opción seleccionada:', opcionSeleccionada);
+            } else if (opcionSeleccionada == '4'){
+                $('#eliminarRodeoModal').modal('show');
+                // console.log('Opción seleccionada:', opcionSeleccionada);
             }
-        },
-        data: data,
-        columns: [
-            { data: 'id' },
-            { data: 'name' },
-            { data: 'age' }
-        ]
-    } );
+            
+        });
 
-    // Evento para el select de editar o eliminar un rodeo y desplegar el respectivo modal
-    $('#miSelect').change(function() {
-        // Esta función se ejecutará cada vez que se seleccione una opción
-        var opcionSeleccionada = $(this).val();
-        var select = document.getElementById('miSelect');
-        select.selectedIndex = 0;
-        if (opcionSeleccionada == '3') {
-            $('#editarRodeoModal').modal('show');
-            // console.log('Opción seleccionada:', opcionSeleccionada);
-        } else if (opcionSeleccionada == '4'){
-            $('#eliminarRodeoModal').modal('show');
-            // console.log('Opción seleccionada:', opcionSeleccionada);
-        }
-        
-    });
+        // Evento para eliminar un rodeo, se debe escribir la palabra BORRAR para activar el boton de eliminar
+        function eliminarRodeoKeyUp() {
+            var valorInput = document.getElementById('eliminar_rodeo_texto').value;
+            var boton = document.getElementById('eliminar_rodeo_btn');
 
-    // Evento para eliminar un rodeo, se debe escribir la palabra BORRAR para activar el boton de eliminar
-    function eliminarRodeoKeyUp() {
-        var valorInput = document.getElementById('eliminar_rodeo_texto').value;
-        var boton = document.getElementById('eliminar_rodeo_btn');
+            if (valorInput === 'BORRAR') {
+                boton.disabled = false;
+            } else {
+                boton.disabled = true;
+            }
+        };
+        document.getElementById('eliminar_rodeo_texto').addEventListener('keyup', eliminarRodeoKeyUp);
 
-        if (valorInput === 'BORRAR') {
-            boton.disabled = false;
-        } else {
-            boton.disabled = true;
-        }
-    }
-    document.getElementById('eliminar_rodeo_texto').addEventListener('keyup', eliminarRodeoKeyUp);
-</script>
-
-<script>
-    //Configuración de DataTable
-    function pintarDatatable(dataResult, columns) {
-        $("#animalesTabla").DataTable({
-            data: dataResult,
-            columnDefs: columns,
-            aaSorting: [],
-            pageLength: 25
-        })
-    }
-
-
-    async function datos() {
-        const data = await fetch("{% url 'app_core:rodeo_animales' rodeo.id %}")
-            .then(value => value.json())
-            .then(value => value)
-
-        //ESTRUCTURA JSON QUE DEVUELVE EL API.
-        /*
-        [
-            {
-            "albumId": 1,
-            "id": 1,
-            "title": "accusamus beatae ad facilis cum similique qui sunt",
-            "url": "https://via.placeholder.com/600/92c952",
-            "thumbnailUrl": "https://via.placeholder.com/150/92c952"
-            },
-        */
-
-        //targets: position
-        //Aquí data:"key". Ver arriba
-        //En "render: callback " puedes tranformar la data.
-        const columns = [{
-                targets: 0,
-                title: "Numero",
-                data: "numero"
-            },
-            {
-                targets: 1,
-                title: "Fecha",
-                data: "fecha",
-            },
-            {
-                targets: 2,
-                title: "Observación",
-                data: "observacion"
-            },
-            {
-                targets: 3,
-                title: "Acción",
-                data: null,
-                render : (data,type,r,m) => {
-                    return (type == "display") 
-                    ? `
-                        <button type="button" class="boton-editar" data-toggle="modal" data-target="#editarAnimalModal"><i class="fas fa-edit"></i></button> 
-                        <button type="button" class="boton-borrar"><i class="fas fa-trash-alt"></i></button>
-                    `  
-                    : null
+        //Configuración de DataTable
+        function pintarDatatable(dataResult, columns) {
+            $("#animalesTabla").DataTable({
+                data: dataResult,
+                columnDefs: columns,
+                responsive: true,
+                aaSorting: [[0, 'asc']],
+                dom: "lBfrtip",
+                buttons: [
+                    'copy', 'excel', 'pdf'
+                ],
+                lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
+                pageLength: 100,
+                columns: [
+                    { "width": "24%" },
+                    { "width": "25%" },
+                    { "width": "50%" },
+                    { "width": "1%" } 
+                ],
+                language: {
+                    "sProcessing":    "Procesando...",
+                    "sLengthMenu":    "Mostrar _MENU_ registros",
+                    "sZeroRecords":   "No se encontraron resultados",
+                    "sEmptyTable":    "Ningún dato disponible en esta tabla",
+                    "sInfo":          "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty":     "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered":  "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix":   "",
+                    "sSearch":        "Buscar:",
+                    "sUrl":           "",
+                    "sInfoThousands":  ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst":    "Primero",
+                        "sLast":     "Último",
+                        "sNext":     "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    },
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "sInfoThousands": ",",
+                    "sInfoEmpty": "Mostrando 0 a 0 de 0 registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sSearch": "Buscar:",
+                    "oPaginate": {
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                },
+                "footer": true, // Habilita el pie de tabla
+                "initComplete": function(settings, json) {
+                    // Crear el pie de tabla con las sumas, promedios, u otra información necesaria
+                    $(this).append('<tfoot><tr><th>Número</th><th>Fecha</th><th>Observación</th><th>Acción</th></tr></tfoot>');
                 }
-            }
-        ]
-        pintarDatatable(data, columns)
-    }
+            });
+        };
 
-    datos()
+        async function datos() {
+            const data = await fetch("{% url 'app_core:rodeo_animales' rodeo.id %}")
+                .then(value => value.json())
+                .then(value => value)
+
+            //targets: position
+            //Aquí data:"key". Ver arriba
+            //En "render: callback " puedes tranformar la data.
+            const columns = [{
+                    targets: 0,
+                    title: "Número",
+                    data: "numero"
+                },
+                {
+                    targets: 1,
+                    title: "Fecha",
+                    data: "fecha",
+                    render: function(data,type,r,m) {
+                        // Si el tipo de renderizado es 'display', se mostrará en la tabla
+                        if (type === 'display') {
+                            // Extrae solo el año de la fecha
+                            var year = data.substring(0, 4);
+                            // Devuelve el año para mostrar en la tabla
+                            return year;
+                        }
+                        // Si no es 'display', simplemente devuelve los datos sin modificar
+                        return data;
+                    }
+                },
+                {
+                    targets: 2,
+                    title: "Observación",
+                    data: "observacion"
+                },
+                {
+                    targets: 3,
+                    title: "Acción",
+                    data: null,
+                    render : (data,type,r,m) => {
+                        return (type == "display") 
+                        ? `
+                            <button type="button" 
+                                class="boton-editar modificar" 
+                                data-toggle="modal" 
+                                data-target="#editarAnimalModal" 
+                                data-animal_id="${data.id}" 
+                                data-numero="${data.numero}" 
+                                data-fecha="${data.fecha}" 
+                                data-observacion="${data.observacion}" >
+                                <i class="fas fa-edit"></i>
+                            </button> 
+                            
+                            <button type="button" 
+                                class="boton-borrar eliminar" 
+                                data-toggle="modal" 
+                                data-target="#eliminarAnimalModal" 
+                                data-animal_id="${data.id}" 
+                                data-numero="${data.numero}">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        `  
+                        : null
+                    }
+                }
+            ]
+            pintarDatatable(data, columns)
+        };
+        datos()
+
+        // Manejar el clic en el botón de editar
+        $('#animalesTabla').on('click', '.modificar', function() {
+            // Obtiene los datos del atributo de datos del botón
+            var animal_id = $(this).data('animal_id');
+            var numero = $(this).data('numero');
+            var fecha = $(this).data('fecha');
+            var observacion = $(this).data('observacion');
+            // Muestra los datos en el modal
+            $('#animalIdInput').val(animal_id);
+            $('#numeroInput').val(numero);
+            $('#fechaInput').val(fecha);
+            $('#observacionInput').val(observacion);
+        });
+
+        // Manejar el clic en el botón de editar
+        $('#animalesTabla').on('click', '.eliminar', function() {
+            var numeroLabel = document.getElementById("numeroLabel");
+            // Obtiene los datos del atributo de datos del botón
+            var animal_id = $(this).data('animal_id');
+            var numero = $(this).data('numero');
+            // Muestra los datos en el modal
+            $('#animalIdInput').val(animal_id);
+            numeroLabel.textContent = numero;
+        });
+    });
+    
 </script>
 
 {% endblock extra_javascript %}

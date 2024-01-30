@@ -17,12 +17,11 @@
                                 <input class="form-control" 
                                 type="number" 
                                 placeholder="Numero" 
-                                id="numero" 
+                                id="numeroInput" 
                                 name="numero"
-                                value="{{animal.numero}}"
                                 required>
                                 <input type="hidden" name="add_or_edit_or_delete" value="1">
-                                <input type="hidden" name="animal_id" value="{{animal.id}}">
+                                <input type="hidden" name="animal_id" id="animalIdInput">
                             </div>
                         </div>
 
@@ -31,9 +30,8 @@
                                 <input class="form-control" 
                                 type="date" 
                                 placeholder="Fecha" 
-                                id="fecha" 
+                                id="fechaInput" 
                                 name="fecha"
-                                value="{{animal.fecha|date:'Y\-m\-d'}}"
                                 required>
                             </div>
                         </div>
@@ -43,9 +41,9 @@
                                 <span class="message-error error"></span>
                                 <textarea class="form-control" 
                                     rows="5" 
-                                    id="observacion" 
+                                    id="observacionInput" 
                                     placeholder="Observacion" 
-                                    name="observacion">{{animal.observacion}}</textarea>
+                                    name="observacion"></textarea>
                             </div>
                             <button type="submit" class="btn btn-large btn-warning padding_button w-100" id="submit_btn">EDITAR</button>
                         </div>

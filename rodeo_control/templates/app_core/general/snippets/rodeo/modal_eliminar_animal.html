@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" id="eliminarAnimalModal{{forloop.counter}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="eliminarAnimalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -13,9 +13,9 @@
                     {% csrf_token %}
                     <div class="row">
                         <div class="col-lg-12">
-                           <p>Estás a punto de eliminar el siguiente elemento con número <b>{{animal.numero}}</b>. Ten en cuenta que esta acción no puede deshacerse.</p>
+                           <p>Estás a punto de eliminar el siguiente elemento con número <b id="numeroLabel"></b>. Ten en cuenta que esta acción no puede deshacerse.</p>
                            <input type="hidden" name="add_or_edit_or_delete" value="2">
-                           <input type="hidden" name="animal_id" value="{{animal.id}}">
+                           <input type="hidden" name="animal_id" id="animalIdInput">
                         </div>
                         <div class="col-12">
                             <button type="submit" class="btn btn-large btn-danger padding_button w-100" id="submit_btn">ELIMINAR</button>

@@ -62,8 +62,7 @@ def rodeo(request, pk):
   return render(request, 'app_core/general/rodeo.html', context)
 
 def rodeo_animales(request, pk):
-  animales = Animal.objects.filter(rodeo=pk).values('numero', 'fecha', 'observacion')
+  animales = Animal.objects.filter(rodeo=pk).values('id', 'numero', 'fecha', 'observacion')
   data = list(animales)
-  print(f'Por lo menos llegamos aqui: {data}')
 
   return JsonResponse(data, safe=False)
