@@ -66,3 +66,4 @@ def rodeo_animales(request, pk):
   data = list(animales)
 
   return JsonResponse(data, safe=False)
+  
